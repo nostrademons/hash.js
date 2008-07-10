@@ -1,0 +1,8 @@
+This is a simple implementation of a hashtable in JavaScript.  I must've found a half dozen JavaScript hashtables on the net, but none of them met my requirements:
+
+* Must have a length field and iterators over keys, values, and items.  Really, without these, you might as well use a JS object.
+* Must gracefully accept keys that conflict with the names of built-in methods, eg. "keys", "values", "toString".
+* Must not mess with the prototypes of built-in objects, and preferably has a small namespace footprint.
+* Must be standalone, without dependencies on a large JS library.
+
+So I wrote one, and added some utility methods that were handy for the project I was working on.  Doc comments inline.

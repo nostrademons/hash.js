@@ -1,0 +1,108 @@
+<script type = "text/javascript" src = "jsunit/app/jsUnitCore.js"></script>
+<!-- BEGIN SCRIPT TAGS -->
+<script src = "../../gameclay/editor/js/hash.js"></script>
+<!-- END SCRIPT TAGS -->
+<script>
+var hash;
+
+function setUp() {
+    hash = new Hash({ 'key1': 'Foo', 'key2': 'Bar' });
+};
+
+function tearDown() {
+    hash = null;
+};
+
+function test_get() {
+    assertEquals('Foo', hash.get('key1'));
+    assertEquals(undefined, hash.get('key3'));
+};
+
+function test_contains() {
+    assertTrue(hash.contains('key1'));
+    assertFalse(hash.contains('key3'));
+};
+
+function test_length() {
+    assertEquals(2, hash.length);
+};
+
+function test_put() {
+    assertEquals('Baz', hash.put('key3', 'Baz'));
+    assertEquals('Baz', hash.get('key3'));
+    assertEquals(3, hash.length);
+};
+
+function test_replace() {
+    hash.put('key1', 'Baz');
+    assertEquals('Baz', hash.get('key1'));
+    assertEquals(2, hash.length);
+};
+
+function test_remove() {
+    assertEquals(undefined, hash.remove('key2').get('key2'));
+    assertEquals(1, hash.length);
+};
+
+function test_ensure_old() {
+    assertEquals('Bar', hash.ensure('key2', 'Baz'));
+    assertEquals('Bar', hash.get('key2'));
+    assertEquals(2, hash.length);
+};
+
+function test_ensure_new() {
+    assertEquals('Baz', hash.ensure('key3', 'Baz'));
+    assertEquals('Baz', hash.get('key3'));
+    assertEquals(3, hash.length);
+};
+
+function test_pop() {
+    assertEquals('Bar', hash.pop('key2'));
+    assertEquals(1, hash.length);
+    assertFalse(hash.contains('key2'));
+};
+
+function test_update() {
+    assertEquals('Baz', hash.update({ key3: 'Baz', key4: 'Quux' }).get('key3'));
+    assertEquals('Quux', hash.get('key4'));
+    assertEquals(4, hash.length);
+};
+
+function test_empty() {
+    assertFalse(hash.empty().contains('key1'));
+    assertEquals(0, hash.length);
+};
+
+function test_keys() {
+    var keys = hash.keys().sort();
+    assertEquals(2, keys.length);
+    assertEquals('key1', keys[0]);
+    assertEquals('key2', keys[1]);
+};
+
+function test_values() {
+    var values = hash.values().sort();
+    assertEquals(2, values.length);
+    assertEquals('Bar', values[0]);
+    assertEquals('Foo', values[1]);
+};
+
+function test_items() {
+    var props = {}, items = hash.items();
+    for(var i = 0, len = items.length; i < len; ++i) {
+        props[items[i][0]] = items[i][1];
+    }
+    assertEquals('Foo', props.key1);
+    assertEquals('Bar', props.key2);
+};
+
+function test_method_names() {
+    assertEquals('update', hash.put('get', 'update'));
+    assertEquals('update', hash.get('get'));
+    assertEquals(3, hash.length);
+
+    assertEquals('property', hash.put('length', 'property'));
+    assertEquals('property', hash.get('length'));
+    assertEquals(4, hash.length);
+};
+</script>
