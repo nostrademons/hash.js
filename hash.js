@@ -4,7 +4,7 @@
  * maintained throughout all updates, and has no restrictions upon the
  * types of keys that may be used.
  * 
- * @class
+ * @class Hash
  */
 if(typeof window.Hash != 'undefined') {
     var _Hash = window.Hash;
